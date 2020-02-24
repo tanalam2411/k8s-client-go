@@ -27,4 +27,21 @@ func main() {
 	}
 	fmt.Println("-------------------------------------------")
 
+
+	// ----------------------- POD Details ----------------------
+	fmt.Println("--------- Pods per NamesSpace details: -----------")
+	psc := data_collector.PodClient{Clientset: clientset}
+	ppnsd := psc.GetAllPodsByNamespace("kube-system")
+
+	fmt.Println("Namespace: ", ppnsd.Namespace)
+	fmt.Println("TotalPods: ", ppnsd.TotalPods)
+
+	for _, pd := range ppnsd.PodsDetails {
+		fmt.Println(pd.Name)
+		fmt.Println(pd.ClusterName)
+		fmt.Println(pd.APIVersion)
+		fmt.Println(pd.UID)
+	}
+
+	fmt.Println("------------------------------------------------------")
 }
