@@ -27,4 +27,3 @@ func GetClientSet(configPath string) (*kubernetes.Clientset, error) {
 
 	return clientset, err
 }
-
