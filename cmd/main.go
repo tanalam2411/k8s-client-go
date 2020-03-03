@@ -41,4 +41,12 @@ func main() {
 	fmt.Println(string(b))
 	fmt.Println("------------------------------------------------------")
 
+	fmt.Println("--------- Nodes details: -----------")
+	nds := data_collector.GetAllNodesDetails(clientset)
+	b, err = json.Marshal(nds)
+	if err != nil {
+		fmt.Println("Failed to serialize Node Details: ", err)
+	}
+	fmt.Println(string(b))
+	fmt.Println("------------------------------------------------------")
 }
