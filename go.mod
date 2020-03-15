@@ -5,13 +5,18 @@ go 1.13
 require (
 	github.com/cosiner/argv v0.0.1 // indirect
 	github.com/go-delve/delve v1.4.0 // indirect
+	github.com/go-kit/kit v0.9.0
 	github.com/golang/protobuf v1.3.4 // indirect
 	github.com/imdario/mergo v0.3.8 // indirect
+	github.com/instana/go-sensor v1.7.0
 	github.com/mattn/go-colorable v0.1.6 // indirect
 	github.com/mattn/go-runewidth v0.0.8 // indirect
+	github.com/opentracing/opentracing-go v1.1.0
 	github.com/peterh/liner v1.2.0 // indirect
+	github.com/prometheus/blackbox_exporter v0.16.0
+	github.com/prometheus/client_golang v1.0.0
 	github.com/prometheus/client_model v0.2.0
-	github.com/prometheus/common v0.9.1 // indirect
+	github.com/prometheus/common v0.9.1
 	github.com/prometheus/prom2json v1.3.0
 	github.com/spf13/cobra v0.0.6 // indirect
 	go.starlark.net v0.0.0-20200203144150-6677ee5c7211 // indirect
