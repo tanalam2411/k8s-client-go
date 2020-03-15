@@ -41,6 +41,15 @@ func main() {
 	fmt.Println(string(b))
 	fmt.Println("------------------------------------------------------")
 
+	fmt.Println("--------- ReplicaSet per NamesSpace details: -----------")
+	rspnsd := data_collector.AllReplicaSetsPerNamespace(clientset, nsds.NamespaceNames)
+	b, err = json.Marshal(rspnsd)
+	if err != nil {
+		fmt.Println("Failed to serialize ReplicaSetPerNamespaceDetails: ", err)
+	}
+	fmt.Println(string(b))
+	fmt.Println("------------------------------------------------------")
+
 	fmt.Println("--------- Nodes details: -----------")
 	nds := data_collector.GetAllNodesDetails(clientset)
 	b, err = json.Marshal(nds)

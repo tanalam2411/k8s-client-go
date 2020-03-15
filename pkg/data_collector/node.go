@@ -8,25 +8,21 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
-
 type NodeClient struct {
 	Clientset *kubernetes.Clientset
 }
 
-
 type NodeDetails struct {
-	NodeInfo *NodeInfo
-	NodeAddresses []NodeAddress
+	NodeInfo       *NodeInfo
+	NodeAddresses  []NodeAddress
 	NodeSystemInfo *NodeSystemInfo
-	NodeCapacity *NodeCapacity
+	NodeCapacity   *NodeCapacity
 }
-
 
 type NodeInfo struct {
 	Name string
-	UID types.UID
+	UID  types.UID
 }
-
 
 func (ni *NodeInfo) setter(node *v1.Node) {
 	ni.Name = node.GetName()
@@ -35,7 +31,7 @@ func (ni *NodeInfo) setter(node *v1.Node) {
 
 type NodeAddress struct {
 	Address string
-	Type string
+	Type    string
 }
 
 func (na *NodeAddress) setter(nodeAddr *v1.NodeAddress) {
@@ -44,15 +40,14 @@ func (na *NodeAddress) setter(nodeAddr *v1.NodeAddress) {
 }
 
 type NodeSystemInfo struct {
-	Architecture string
-	KernelVersion string
+	Architecture     string
+	KernelVersion    string
 	KubeProxyVersion string
-	KubeletVersion string
-	OperatingSystem string
-	OsImage string
-	SystemUUID string
+	KubeletVersion   string
+	OperatingSystem  string
+	OsImage          string
+	SystemUUID       string
 }
-
 
 func (nsi *NodeSystemInfo) setter(node *v1.Node) {
 	nsi.Architecture = node.Status.NodeInfo.Architecture
@@ -64,14 +59,13 @@ func (nsi *NodeSystemInfo) setter(node *v1.Node) {
 	nsi.KubeProxyVersion = node.Status.NodeInfo.KubeProxyVersion
 }
 
-
 type MaxPodsPerNode int8
 
 type NodeCapacity struct {
-	CPU string
-	Memory string
+	CPU              string
+	Memory           string
 	EphemeralStorage string
-	Pods MaxPodsPerNode
+	Pods             MaxPodsPerNode
 }
 
 func (nd *NodeCapacity) setter(node *v1.Node) {
@@ -86,30 +80,29 @@ func getAllNodes(nc *NodeClient) (*v1.NodeList, error) {
 	return nodeList, err
 }
 
-
 func GetAllNodesDetails(clientset *kubernetes.Clientset) map[string]*NodeDetails {
-	nodeList, err := getAllNodes(&NodeClient{Clientset:clientset})
+	nodeList, err := getAllNodes(&NodeClient{Clientset: clientset})
 
 	if err != nil {
-	fmt.Println("Failed to get node list: ", err)
+		fmt.Println("Failed to get node list: ", err)
 	}
 
 	nodeMap := map[string]*NodeDetails{}
 
 	for _, node := range nodeList.Items {
-			nc := NodeDetails{}
-			nc.NodeInfo = &NodeInfo{}
-			nc.NodeInfo.setter(&node)
-			nc.NodeSystemInfo = &NodeSystemInfo{}
-			nc.NodeSystemInfo.setter(&node)
-			nc.NodeCapacity = &NodeCapacity{}
-			nc.NodeCapacity.setter(&node)
-			for _, addr := range node.Status.Addresses {
-				na := NodeAddress{Address: addr.Address, Type: string(addr.Type)}
-				nc.NodeAddresses = append(nc.NodeAddresses, na)
-			}
+		nc := NodeDetails{}
+		nc.NodeInfo = &NodeInfo{}
+		nc.NodeInfo.setter(&node)
+		nc.NodeSystemInfo = &NodeSystemInfo{}
+		nc.NodeSystemInfo.setter(&node)
+		nc.NodeCapacity = &NodeCapacity{}
+		nc.NodeCapacity.setter(&node)
+		for _, addr := range node.Status.Addresses {
+			na := NodeAddress{Address: addr.Address, Type: string(addr.Type)}
+			nc.NodeAddresses = append(nc.NodeAddresses, na)
+		}
 
-			nodeMap[node.Name] = &nc
+		nodeMap[node.Name] = &nc
 	}
 
 	return nodeMap

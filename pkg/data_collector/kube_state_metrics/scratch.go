@@ -6,10 +6,10 @@ import (
 	"os"
 
 	"encoding/json"
-	"log"
-	"net/http"
 	dto "github.com/prometheus/client_model/go"
 	"github.com/prometheus/prom2json"
+	"log"
+	"net/http"
 )
 
 // attempt to get metrics from kube state metrics and parse using prom to json lib
@@ -27,10 +27,8 @@ func GetMetrics() {
 		fmt.Println("Failed to get metrics: ", err)
 	}
 
- 	Prom2Json(resp.Body)
+	Prom2Json(resp.Body)
 }
-
-
 
 func Prom2Json(input io.Reader) {
 

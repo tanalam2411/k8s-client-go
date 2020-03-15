@@ -13,8 +13,8 @@ type DeploymentClient struct {
 
 type DeploymentPerNamespaceDetails struct {
 	TotalDeployments int32
-	Namespace string
-	DeploymentsInfo []DeploymentInfo
+	Namespace        string
+	DeploymentsInfo  []DeploymentInfo
 }
 
 type DeploymentInfo struct {
@@ -26,7 +26,6 @@ type DeploymentInfo struct {
 	CreationTimestamp metav1.Time
 	Replicas          *int32
 }
-
 
 func GetAllDeploymentsByNamespace(dc *DeploymentClient, namespace string) *DeploymentPerNamespaceDetails {
 
@@ -57,7 +56,6 @@ func GetAllDeploymentsByNamespace(dc *DeploymentClient, namespace string) *Deplo
 
 	return &dpnsd
 }
-
 
 func AllDeploymentsPerNamespace(clientset *kubernetes.Clientset, namespaces []string) map[string]*DeploymentPerNamespaceDetails {
 	dpnsd := map[string]*DeploymentPerNamespaceDetails{}
