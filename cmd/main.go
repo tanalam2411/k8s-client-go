@@ -67,4 +67,13 @@ func main() {
 	}
 	fmt.Println(string(b))
 	fmt.Println("------------------------------------------------------")
+
+	fmt.Println("--------- ConfigMap details: -----------")
+	cmnsd := data_collector.AllConfigMapsPerNamespace(clientset, nsds.NamespaceNames)
+	b, err = json.Marshal(cmnsd)
+	if err != nil {
+		fmt.Println("Failed to serialize ConfigMapsPerNamespaceDetails: ", err)
+	}
+	fmt.Println(string(b))
+	fmt.Println("------------------------------------------------------")
 }
