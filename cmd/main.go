@@ -58,4 +58,13 @@ func main() {
 	}
 	fmt.Println(string(b))
 	fmt.Println("------------------------------------------------------")
+
+	fmt.Println("--------- Service details: -----------")
+	spnsd := data_collector.AllServicesPerNamespace(clientset, nsds.NamespaceNames)
+	b, err = json.Marshal(spnsd)
+	if err != nil {
+		fmt.Println("Failed to serialize ServicePerNamespaceDetails: ", err)
+	}
+	fmt.Println(string(b))
+	fmt.Println("------------------------------------------------------")
 }
