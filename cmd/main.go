@@ -85,4 +85,13 @@ func main() {
 	}
 	fmt.Println(string(b))
 	fmt.Println("------------------------------------------------------")
+
+	fmt.Println("--------- Roles details: -----------")
+	rpnsd := data_collector.AllRolesPerNamespace(clientset, nsds.NamespaceNames)
+	b, err = json.Marshal(rpnsd)
+	if err != nil {
+		fmt.Println("Failed to serialize RolesPerNamespaceDetails: ", err)
+	}
+	fmt.Println(string(b))
+	fmt.Println("------------------------------------------------------")
 }
