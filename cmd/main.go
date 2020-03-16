@@ -76,4 +76,13 @@ func main() {
 	}
 	fmt.Println(string(b))
 	fmt.Println("------------------------------------------------------")
+
+	fmt.Println("--------- EndPoints details: -----------")
+	epnsd := data_collector.AllEndPointsPerNamespace(clientset, nsds.NamespaceNames)
+	b, err = json.Marshal(epnsd)
+	if err != nil {
+		fmt.Println("Failed to serialize EndPointsPerNamespaceDetails: ", err)
+	}
+	fmt.Println(string(b))
+	fmt.Println("------------------------------------------------------")
 }
