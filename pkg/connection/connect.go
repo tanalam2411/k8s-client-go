@@ -3,22 +3,26 @@ package connection
 import (
 	"flag"
 	"fmt"
-	"os"
-
 	"k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
+	"os"
 )
 
 func GetClientSet(configPath string) (*kubernetes.Clientset, error) {
 
-	kubeconfig := flag.String("kubeconfig", configPath, "kubeconfig file")
-	flag.Parse()
-
-	config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
+	config, err := rest.InClusterConfig()
 	if err != nil {
-		fmt.Printf("The kubeconfig cannot be loaded: %v\n", err)
-		os.Exit(0)
+		kubeconfig := flag.String("kubeconfig", configPath, "kubeconfig file")
+		flag.Parse()
+
+		config, err = clientcmd.BuildConfigFromFlags("", *kubeconfig)
+		if err != nil {
+			fmt.Printf("The kubeconfig cannot be loaded: %v\n", err)
+			os.Exit(1)
+		}
 	}
+
 	clientset, err := kubernetes.NewForConfig(config)
 
 	if err != nil {
