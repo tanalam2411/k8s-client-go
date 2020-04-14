@@ -9,25 +9,36 @@ import (
 	"os"
 )
 
-func GetClientSet(configPath string) (*kubernetes.Clientset, error) {
+var kubeconfig *string
 
+func init() {
+	kubeconfig = flag.String("kubeconfig", "", "kubeconfig file")
+}
+
+func GetRestclientConfig(configPath string) (*rest.Config, error) {
 	config, err := rest.InClusterConfig()
 	if err != nil {
-		kubeconfig := flag.String("kubeconfig", configPath, "kubeconfig file")
+		flag.Set("kubeconfig", configPath)
 		flag.Parse()
 
 		config, err = clientcmd.BuildConfigFromFlags("", *kubeconfig)
-		if err != nil {
-			fmt.Printf("The kubeconfig cannot be loaded: %v\n", err)
-			os.Exit(1)
-		}
+		return config, err
 	}
 
+	return config, err
+}
+
+func GetClientSet(configPath string) (*kubernetes.Clientset, error) {
+
+	config, err := GetRestclientConfig(configPath)
+	if err != nil {
+		fmt.Println("Failed to load kubeconfig: #{err}\n")
+		os.Exit(1)
+	}
 	clientset, err := kubernetes.NewForConfig(config)
 
 	if err != nil {
 		fmt.Printf("Failed to generate clientset: %f\n", err)
 	}
-
 	return clientset, err
 }

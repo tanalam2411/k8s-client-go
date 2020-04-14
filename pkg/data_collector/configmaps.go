@@ -28,7 +28,6 @@ type ConfigMapInfo struct {
 }
 
 func GetAllConfigMapByNamespace(cmc *ConfigMapClient, namespace string) *ConfigMapsPerNamespaceDetails {
-
 	configMapList, err := cmc.Clientset.CoreV1().ConfigMaps(namespace).List(metav1.ListOptions{})
 
 	if err != nil {

@@ -9,7 +9,7 @@ import (
 
 func main() {
 
-	clientset, err := connection.GetClientSet("/home/afour/.kube/config")
+	clientset, err := connection.GetClientSet("~/.kube/config")
 	if err != nil {
 		fmt.Println(err)
 	}
